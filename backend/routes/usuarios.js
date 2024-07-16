@@ -1,17 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const Usuario = require('../models/Usuario'); // Asegúrate de tener la ruta correcta al modelo
+const Usuario = require('../models/Usuario'); // Asegúrate de que la ruta al modelo es correcta
+const usersController = require('../controllers/usersController'); // Ajusta la ruta si es necesario
 
-// Obtener todos los usuarios
-router.get('/', async (req, res) => {
-    try {
-        const usuarios = await Usuario.find();
-        res.json(usuarios);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-});
+// Obtener todos los usuarios utilizando el método en el controlador
+router.get('/', usersController.getAllUsers);
 
-// Añade aquí más rutas según sea necesario
+// Obtener un usuario específico por ID
+router.get('/:id', usersController.getUserById);
+
+// Crear un nuevo usuario
+router.post('/', usersController.createUser);
+
+// Actualizar un usuario por ID
+router.put('/:id', usersController.updateUser);
+
+// Eliminar un usuario por ID
+router.delete('/:id', usersController.deleteUser);
 
 module.exports = router;
